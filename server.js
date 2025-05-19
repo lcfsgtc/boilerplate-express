@@ -22,7 +22,22 @@ if (!process.env.DISABLE_XORIGIN) {
 }
 app.get("/", (req, res)=>{
   console.log("Route / was hit!"); // Add this line
-  res.send('Hello Express');
+  const relativePath = '/views/index.html'; // Replace with your *relative* path
+  //const absolutePath = path.resolve(__dirname, relativePath); // Construct the absolute path//__dirname + relativePath
+     const absolutePath = __dirname +'/views/index.html'
+  /*if (!absolutePath.startsWith(path.resolve(__dirname))) {
+    console.error('Security Violation: Attempted to access a file outside the allowed directory.');
+    return res.status(403).send('Forbidden'); // Or another appropriate error response
+  }*/
+  //res.send(absolutePath);
+    res.sendFile(absolutePath, (err) => {
+    if (err) {
+      console.error("Error sending file:", err);
+      res.status(err.status || 500).send('Internal Server Error');
+    } else {
+      console.log('File sent successfully!');
+    }
+  });
 });
 
 const port = process.env.PORT || 3000;
