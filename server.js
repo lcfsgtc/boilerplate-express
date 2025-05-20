@@ -28,12 +28,12 @@ if (!process.env.DISABLE_XORIGIN) {
     next();
   });
 }
-app.get("/public", (req, res)=>{
+/*app.get("/", (req, res)=>{
   console.log("Route / was hit!"); // Add this line
 
   // 使用 path.join 来构建路径更安全和跨平台
-  //const absolutePath = path.join(__dirname, 'views', 'index.html');
-  const absolutePath = path.join(__dirname, 'public', 'style.css');
+  const absolutePath = path.join(__dirname, 'views', 'index.html');
+  //const absolutePath = path.join(__dirname, 'public', 'style.css');
 
 
     res.sendFile(absolutePath, (err) => {
@@ -45,7 +45,7 @@ app.get("/public", (req, res)=>{
       console.log('File sent successfully!');
     }
   });
-});
+});*/
 
 const port = process.env.PORT || 3000;
 bGround.setupBackgroundApp(app, myApp, __dirname).listen(port, () => {
