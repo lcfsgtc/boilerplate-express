@@ -28,7 +28,7 @@ if (!process.env.DISABLE_XORIGIN) {
     next();
   });
 }
-app.get("/", (req, res)=>{
+app.get("/public/style.css", (req, res)=>{
   console.log("Route / was hit!"); // Add this line
 
   // 使用 path.join 来构建路径更安全和跨平台
