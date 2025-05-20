@@ -6,7 +6,15 @@
 const bGround = require('fcc-express-bground');
 const myApp = require('./myApp');
 const express = require('express');
+const path = require('path'); // 1. 引入 path 模块
 const app = express();
+
+// 2. 配置 express.static 中间件来提供 public 目录下的静态文件
+// 当请求路径以 /public 开头时，Express 会在项目根目录下的 'public' 文件夹中查找文件
+// 例如：GET /public/style.css 会查找 __dirname/public/style.css
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
+
 
 if (!process.env.DISABLE_XORIGIN) {
   app.use((req, res, next) => {
@@ -22,17 +30,15 @@ if (!process.env.DISABLE_XORIGIN) {
 }
 app.get("/", (req, res)=>{
   console.log("Route / was hit!"); // Add this line
-  const relativePath = '/views/index.html'; // Replace with your *relative* path
-  //const absolutePath = path.resolve(__dirname, relativePath); // Construct the absolute path//__dirname + relativePath
-     const absolutePath = __dirname +'/views/index.html'
-  /*if (!absolutePath.startsWith(path.resolve(__dirname))) {
-    console.error('Security Violation: Attempted to access a file outside the allowed directory.');
-    return res.status(403).send('Forbidden'); // Or another appropriate error response
-  }*/
-  //res.send(absolutePath);
+
+  // 使用 path.join 来构建路径更安全和跨平台
+  const absolutePath = path.join(__dirname, 'views', 'index.html');
+  // const absolutePath = __dirname +'/views/index.html' // 之前的写法
+
     res.sendFile(absolutePath, (err) => {
     if (err) {
       console.error("Error sending file:", err);
+      // 确保在发生错误时发送状态码
       res.status(err.status || 500).send('Internal Server Error');
     } else {
       console.log('File sent successfully!');
