@@ -28,7 +28,7 @@ if (!process.env.DISABLE_XORIGIN) {
     next();
   });
 }
-/*app.get("/", (req, res)=>{
+app.get("/", (req, res)=>{
   console.log("Route / was hit!"); // Add this line
 
   // 使用 path.join 来构建路径更安全和跨平台
@@ -45,7 +45,7 @@ if (!process.env.DISABLE_XORIGIN) {
       console.log('File sent successfully!');
     }
   });
-});*/
+});
 
 const port = process.env.PORT || 3000;
 bGround.setupBackgroundApp(app, myApp, __dirname).listen(port, () => {
