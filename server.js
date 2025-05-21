@@ -27,10 +27,6 @@ if (!process.env.DISABLE_XORIGIN) {
     next();
   });
 }
-app.use("/public", express.static(__dirname + "/public"));
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/views/index.html");
-});
 /*app.get("/", (req, res)=>{
   console.log('Request URL:', req.url);
   // 使用 path.join 来构建路径更安全和跨平台
