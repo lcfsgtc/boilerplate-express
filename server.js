@@ -50,7 +50,23 @@ app.use(function middleware(req, res, next) {
   next();
 });
 app.use("/public", express.static(__dirname + "/public"));
-app.get("/json", (req, res) => {
+app.get(
+  "/now",
+  (req, res, next) => {
+    // adding a new property to req object
+    // in the middleware function
+    req.time = new Date().toString();
+    next();
+  },
+  (req, res) => {
+    // accessing the newly added property
+    // in the main function
+    res.send({
+      time: req.time
+    });
+  }
+);
+/*app.get("/json", (req, res) => {
   //res.sendFile(__dirname + "/views/index.html");
   if(process.env.MESSAGE_STYLE=='uppercase'){
     res.json({"message": "HELLO JSON"})
@@ -58,7 +74,7 @@ app.get("/json", (req, res) => {
     res.json({"message": "Hello json"})
   }
 
-});
+});*/
 
 const port = process.env.PORT || 3000;
 bGround.setupBackgroundApp(app, myApp, __dirname).listen(port, () => {
