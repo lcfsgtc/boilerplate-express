@@ -13,7 +13,7 @@ const app = express();
 // 当请求路径以 /public 开头时，Express 会在项目根目录下的 'public' 文件夹中查找文件
 
 //app.use('/public', express.static(__dirname + "/public"));
-app.use('/public', express.static(path.join(__dirname, 'public')));
+
 
 if (!process.env.DISABLE_XORIGIN) {
   app.use((req, res, next) => {
@@ -43,6 +43,7 @@ app.get("/", (req, res)=>{
   });
 });
 
+app.use('/public', express.static(path.join(__dirname, 'public')));
 const port = process.env.PORT || 3000;
 bGround.setupBackgroundApp(app, myApp, __dirname).listen(port, () => {
   bGround.log(`Node is listening on port ${port}...`);
