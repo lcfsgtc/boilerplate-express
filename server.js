@@ -9,6 +9,7 @@ const express = require("express");
 //const path = require("path"); // 1. 引入 path 模块
 const app = express();
 
+
 if (!process.env.DISABLE_XORIGIN) {
   app.use((req, res, next) => {
     const allowedOrigins = [
@@ -27,56 +28,16 @@ if (!process.env.DISABLE_XORIGIN) {
     next();
   });
 }
-/*app.get("/", (req, res)=>{
-  console.log('Request URL:', req.url);
-  // 使用 path.join 来构建路径更安全和跨平台
-  const absolutePath = path.join(__dirname, 'views', 'index.html');
 
-    res.sendFile(absolutePath, (err) => {
-    if (err) {
-      console.error("Error sending file:", err);
-      // 确保在发生错误时发送状态码
-      res.status(err.status || 500).send('Internal Server Error');
-    } else {
-      console.log('File sent successfully!');
-    }
-  });
-});*/
-app.use(function middleware(req, res, next) {
-  // Do something
-  var logStr = req.method + " " + req.path + " - " + req.ip;
-  console.log(logStr);
-  // Call the next function in line:
-  next();
-});
-app.use("/public", express.static(__dirname + "/public"));
-// 显式定义中间件函数
-const addCurrentTime = (req, res, next) => {
-  req.time = new Date().toString();
-  next();
-};
 app.get("/now",(req, res, next) => {
-    // adding a new property to req object
-    // in the middleware function
     req.time = new Date().toString();
     next();
   },(req, res) => {
-    // accessing the newly added property
-    // in the main function
     res.send({
       time: req.time
     });
   }
 );
-/*app.get("/json", (req, res) => {
-  //res.sendFile(__dirname + "/views/index.html");
-  if(process.env.MESSAGE_STYLE=='uppercase'){
-    res.json({"message": "HELLO JSON"})
-  }else{
-    res.json({"message": "Hello json"})
-  }
-
-});*/
 
 const port = process.env.PORT || 3000;
 bGround.setupBackgroundApp(app, myApp, __dirname).listen(port, () => {
