@@ -9,13 +9,6 @@ const express = require('express');
 const path = require('path'); // 1. 引入 path 模块
 const app = express();
 
-// 2. 配置 express.static 中间件来提供 public 目录下的静态文件
-// 当请求路径以 /public 开头时，Express 会在项目根目录下的 'public' 文件夹中查找文件
-
-//app.use('/public', express.static(__dirname + "/public"));
-
-app.use(express.static(__dirname + "/public"));
-app.use('/public', express.static(__dirname + "/public"));
 if (!process.env.DISABLE_XORIGIN) {
   app.use((req, res, next) => {
     const allowedOrigins = ['https://narrow-plane.gomix.me', 'https://www.freecodecamp.com'];
@@ -43,9 +36,13 @@ if (!process.env.DISABLE_XORIGIN) {
     }
   });
 });*/
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + '/views/index.html')
-})
+
+app.use("/public", express.static(__dirname + "/public"));
+app.get("/json", (req, res) => {
+  //res.sendFile(__dirname + "/views/index.html");
+  res.json({"message": "Hello json"})
+});
+
 const port = process.env.PORT || 3000;
 bGround.setupBackgroundApp(app, myApp, __dirname).listen(port, () => {
   bGround.log(`Node is listening on port ${port}...`);
