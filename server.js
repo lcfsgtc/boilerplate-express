@@ -42,7 +42,13 @@ if (!process.env.DISABLE_XORIGIN) {
     }
   });
 });*/
-
+app.use(function middleware(req, res, next) {
+  // Do something
+  var logStr = req.method + " " + req.path + " - " + req.ip;
+  console.log(logStr);
+  // Call the next function in line:
+  next();
+});
 app.use("/public", express.static(__dirname + "/public"));
 app.get("/json", (req, res) => {
   //res.sendFile(__dirname + "/views/index.html");
