@@ -50,18 +50,23 @@ app.use(function middleware(req, res, next) {
   next();
 });
 app.use("/public", express.static(__dirname + "/public"));
+// 显式定义中间件函数
+const addCurrentTime = (req, res, next) => {
+  req.time = new Date().toString();
+  next();
+};
 app.get(
-  "/now",
-  (req, res, next) => {
+  "/now",addCurrentTime,
+  /*(req, res, next) => {
     // adding a new property to req object
     // in the middleware function
     req.time = new Date().toString();
     next();
-  },
+  },*/
   (req, res) => {
     // accessing the newly added property
     // in the main function
-    res.send({
+    res.json({
       time: req.time
     });
   }
