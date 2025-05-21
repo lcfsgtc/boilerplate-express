@@ -36,6 +36,7 @@ app.get("/now",(req, res, next) => {
     res.send({
       time: req.time
     });
+    next();
   }
 );
 
