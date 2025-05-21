@@ -38,7 +38,6 @@ app.get("/now",(req, res, next) => {
   }
 );
 
-
 const port = process.env.PORT || 3000;
 bGround.setupBackgroundApp(app, myApp, __dirname).listen(port, () => {
   bGround.log(`Node is listening on port ${port}...`);
