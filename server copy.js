@@ -9,6 +9,7 @@ const express = require("express");
 //const path = require("path"); // 1. 引入 path 模块
 const app = express();
 
+
 if (!process.env.DISABLE_XORIGIN) {
   app.use((req, res, next) => {
     const allowedOrigins = [
