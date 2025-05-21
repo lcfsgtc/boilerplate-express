@@ -14,7 +14,8 @@ const app = express();
 
 //app.use('/public', express.static(__dirname + "/public"));
 
-
+app.use(express.static(__dirname + "/public"));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 if (!process.env.DISABLE_XORIGIN) {
   app.use((req, res, next) => {
     const allowedOrigins = ['https://narrow-plane.gomix.me', 'https://www.freecodecamp.com'];
@@ -27,7 +28,7 @@ if (!process.env.DISABLE_XORIGIN) {
     next();
   });
 }
-app.get("/", (req, res)=>{
+/*app.get("/", (req, res)=>{
   console.log('Request URL:', req.url);
   // 使用 path.join 来构建路径更安全和跨平台
   const absolutePath = path.join(__dirname, 'views', 'index.html');
@@ -41,9 +42,10 @@ app.get("/", (req, res)=>{
       console.log('File sent successfully!');
     }
   });
-});
-app.use(express.static(__dirname + "/public"));
-app.use('/public', express.static(path.join(__dirname, 'public')));
+});*/
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + '/views/index.html')
+})
 const port = process.env.PORT || 3000;
 bGround.setupBackgroundApp(app, myApp, __dirname).listen(port, () => {
   bGround.log(`Node is listening on port ${port}...`);
