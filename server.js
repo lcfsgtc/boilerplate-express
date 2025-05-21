@@ -55,16 +55,12 @@ const addCurrentTime = (req, res, next) => {
   req.time = new Date().toString();
   next();
 };
-app.get(
-  "/now",
-  //addCurrentTime,
-  (req, res, next) => {
+app.get("/now",(req, res, next) => {
     // adding a new property to req object
     // in the middleware function
     req.time = new Date().toString();
     next();
-  },
-  (req, res) => {
+  },(req, res) => {
     // accessing the newly added property
     // in the main function
     res.send({
