@@ -11,9 +11,7 @@ const app = express();
 
 // 2. 配置 express.static 中间件来提供 public 目录下的静态文件
 // 当请求路径以 /public 开头时，Express 会在项目根目录下的 'public' 文件夹中查找文件
-// 例如：GET /public/style.css 会查找 __dirname/public/style.css
-//app.use('/public', express.static(path.join(__dirname, 'public', 'style.css')));
-console.log(__dirname);
+
 app.use('/public', express.static(__dirname + "/public"));
 
 if (!process.env.DISABLE_XORIGIN) {
@@ -29,12 +27,9 @@ if (!process.env.DISABLE_XORIGIN) {
   });
 }
 app.get("/", (req, res)=>{
-  console.log("Route / was hit!"); // Add this line
-
+  console.log('Request URL:', req.url);
   // 使用 path.join 来构建路径更安全和跨平台
   const absolutePath = path.join(__dirname, 'views', 'index.html');
-  //const absolutePath = path.join(__dirname, 'public', 'style.css');
-
 
     res.sendFile(absolutePath, (err) => {
     if (err) {
