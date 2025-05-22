@@ -6,9 +6,7 @@ require('dotenv').config()
 const bGround = require("fcc-express-bground");
 const myApp = require("./myApp");
 const express = require("express");
-//const path = require("path"); // 1. 引入 path 模块
 const app = express();
-
 
 if (!process.env.DISABLE_XORIGIN) {
   app.use((req, res, next) => {
@@ -28,17 +26,6 @@ if (!process.env.DISABLE_XORIGIN) {
     next();
   });
 }
-
-app.get("/now",(req, res, next) => {
-    req.time = new Date().toString();
-    next();
-  },(req, res) => {
-    res.send({
-      time: req.time
-    });
-    next();
-  }
-);
 
 const port = process.env.PORT || 3000;
 bGround.setupBackgroundApp(app, myApp, __dirname).listen(port, () => {
